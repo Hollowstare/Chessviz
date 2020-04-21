@@ -1,10 +1,11 @@
 g = g++
-CFLAGS = -Wall -Werror
+CFLAGS = -Wall -Werror -MP -MMD
 
-.PHONY: clean open
+.PHONY: clean run all
 
-.bin/board: ./build/main.o ./build/drawBoard.o ./build/moveP.o
-		$(g) $(CFLAGS) -o ./bin/moveP ./build/main.o ./build/moveP.o ./build/drawBoard.o -lm
+all: .bin/moveP
+
+-include build/src/*.d
 
 ./build/main.o: ./src/main.cpp ./src/header.h
 		$(g) $(CFLAGS) -o build/main.o -c src/main.cpp -lm
@@ -15,11 +16,11 @@ CFLAGS = -Wall -Werror
 ./build/moveP.o: ./src/moveP.cpp ./src/header.h
 		$(g) $(CFLAGS) -o ./build/moveP.o -c ./src/moveP.cpp -lm
 
+.bin/moveP: ./build/main.o ./build/drawBoard.o ./build/moveP.o
+		$(g) $(CFLAGS) -o ./bin/moveP ./build/main.o ./build/moveP.o ./build/drawBoard.o -lm
+
 clean:
 		rm -rf build bin
-
-open:
-		./bin/moveP
 
 run:
 		./bin/moveP
