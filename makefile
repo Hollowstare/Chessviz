@@ -20,7 +20,7 @@ all: .bin/moveP
 	$(g) $(CFLAGS) -o ./bin/moveP ./build/main.o ./build/moveP.o ./build/drawBoard.o -lm
 
 clean:
-	rm -rf build bin
+	rm -rf *.o
 
 run:
 	./bin/moveP
