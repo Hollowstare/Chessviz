@@ -1,17 +1,12 @@
+#include "header.h"
 #include <cstring>
 #include <iostream>
 #include <stdlib.h>
 
 using namespace std;
 
-string transformChar = " ";
 int beginY = 0, endY = 0;
-bool check = true;
 int beginX = 0, endX = 0;
-char typeFigure;
-void movePawn(char coordinates[], char pole[][9]);
-
-bool checkMove(char coordinates[], char pole[][9]);
 
 void CheckTypePiece(char coordinates[], char pole[][9])
 {
@@ -41,6 +36,7 @@ void movePawn(char coordinates[], char pole[][9])
 
 bool checkMove(char coordinates[], char pole[][9])
 {
+    string transformChar = " ";
     for (int i = 0; i < 4; i += 3) {
         switch (coordinates[i]) {
         case 'a':
