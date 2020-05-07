@@ -176,41 +176,41 @@ bool checkMove(char coordinates[], char pole[][9])
     }
 
     if (CheckBoard(beginX, endY, beginY, endX) == false) {
-      cout << "Incorrect entry, the figure cannot be located and go beyond "
-              "the chessboard"
-           << endl;
+        cout << "Incorrect entry, the figure cannot be located and go beyond "
+                "the chessboard"
+             << endl;
         return false;
     }
 
     if (CheckType(beginY, beginX, pole, coordinates) == false) {
-      cout << "Incorrect entry, the type of piece does not match "
-              "the type of piece standing on the starting chessboard "
-              "square"
-           << endl;
+        cout << "Incorrect entry, the type of piece does not match "
+                "the type of piece standing on the starting chessboard "
+                "square"
+             << endl;
         return false;
     }
 
     if (CheckMove(coordinates, pole, endY, endX) == false) {
-        if(strlen(coordinates) == 5) {
-          if(coordinates[2] == 'x') {
-            cout << "Incorrect entry, the figure cannot take to an empty "
-                    "chessboard square"
-                 << endl;
-          } else {
-            cout << "Incorrect entry, the figure cannot make a quiet move "
-                    "to the occupied chessboard square"
-                 << endl;
-          }
+        if (strlen(coordinates) == 5) {
+            if (coordinates[2] == 'x') {
+                cout << "Incorrect entry, the figure cannot take to an empty "
+                        "chessboard square"
+                     << endl;
+            } else {
+                cout << "Incorrect entry, the figure cannot make a quiet move "
+                        "to the occupied chessboard square"
+                     << endl;
+            }
         } else {
-          if(coordinates[3] == 'x') {
-            cout << "Incorrect entry, the figure cannot take to an empty "
-                    "chessboard square"
-                 << endl;
-          } else {
-            cout << "Incorrect entry, the figure cannot make a quiet move "
-                    "to the occupied chessboard square"
-                 << endl;
-          }
+            if (coordinates[3] == 'x') {
+                cout << "Incorrect entry, the figure cannot take to an empty "
+                        "chessboard square"
+                     << endl;
+            } else {
+                cout << "Incorrect entry, the figure cannot make a quiet move "
+                        "to the occupied chessboard square"
+                     << endl;
+            }
         }
         return false;
     }
