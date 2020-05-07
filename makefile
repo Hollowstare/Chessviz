@@ -1,5 +1,5 @@
 g = g++
-CFLAGS = -Wall -Werror -MP -MMD
+CFLAGS = -Wall -Werror -MP -MMD -std=c++14
 
 .PHONY: clean run all
 
@@ -20,7 +20,7 @@ all: ./bin/moveP.exe
 	$(g) $(CFLAGS) -o ./build/moveP.o -c ./src/moveP.cpp -lm
 
 
-test: create bin/chessviz-test
+test: bin/chessviz-test
 
 bin/chessviz-test: build/test/main.o build/test/moveP.o
 		$(g) -o bin/chessviz-test build/test/main.o build/test/moveP.o
@@ -31,9 +31,6 @@ build/test/main.o: test/main.cpp
 
 build/test/moveP.o: src/moveP.cpp
 		$(g) $(CFLAGS) -o build/test/moveP.o -c src/moveP.cpp
-
-create:
-		mkdir -p bin/temp build/src build/test
 
 clean:
 	rm -rf build/*.o build/*.d
