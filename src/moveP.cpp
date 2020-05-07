@@ -176,17 +176,44 @@ bool checkMove(char coordinates[], char pole[][9])
     }
 
     if (CheckBoard(beginX, endY, beginY, endX) == false) {
+      cout << "Incorrect entry, the figure cannot be located and go beyond "
+              "the chessboard"
+           << endl;
         return false;
     }
 
     if (CheckType(beginY, beginX, pole, coordinates) == false) {
+      cout << "Incorrect entry, the type of piece does not match "
+              "the type of piece standing on the starting chessboard "
+              "square"
+           << endl;
         return false;
     }
 
-    if (CheckMove(coordinates, pole) == false) {
+    if (CheckMove(coordinates, pole, endY, endX) == false) {
+        if(strlen(coordinates) == 5) {
+          if(coordinates[2] == 'x') {
+            cout << "Incorrect entry, the figure cannot take to an empty "
+                    "chessboard square"
+                 << endl;
+          } else {
+            cout << "Incorrect entry, the figure cannot make a quiet move "
+                    "to the occupied chessboard square"
+                 << endl;
+          }
+        } else {
+          if(coordinates[3] == 'x') {
+            cout << "Incorrect entry, the figure cannot take to an empty "
+                    "chessboard square"
+                 << endl;
+          } else {
+            cout << "Incorrect entry, the figure cannot make a quiet move "
+                    "to the occupied chessboard square"
+                 << endl;
+          }
+        }
         return false;
     }
-
     return true;
 }
 
@@ -194,31 +221,22 @@ bool CheckBoard(int a, int b, int c, int d)
 {
     if (a <= 0 || a >= 9 || b <= 0 || b >= 9 || c <= 0 || c >= 9 || d <= 0
         || d >= 9) {
-        cout << "Incorrect entry, the figure cannot be located and go beyond "
-                "the chessboard"
-             << endl;
         return false;
     }
     return true;
 }
 
-bool CheckMove(char coordinates[], char pole[][9])
+bool CheckMove(char coordinates[], char pole[][9], int endY, int endX)
 {
     if (strlen(coordinates) == 5) {
         if (coordinates[2] == '-') {
             if (pole[endY - 1][endX] == ' ') {
             } else {
-                cout << "Incorrect entry, the figure cannot make a quiet move "
-                        "to the occupied chessboard square"
-                     << endl;
                 return false;
             }
         } else if (coordinates[2] == 'x') {
             if (pole[endY - 1][endX] != ' ') {
             } else {
-                cout << "Incorrect entry, the figure cannot take to an empty "
-                        "chessboard square"
-                     << endl;
                 return false;
             }
         }
@@ -226,17 +244,11 @@ bool CheckMove(char coordinates[], char pole[][9])
         if (coordinates[3] == '-') {
             if (pole[endY - 1][endX] == ' ') {
             } else {
-                cout << "Incorrect entry, the figure cannot make a quiet move "
-                        "to the occupied chessboard square"
-                     << endl;
                 return false;
             }
         } else if (coordinates[3] == 'x') {
             if (pole[endY - 1][endX] != ' ') {
             } else {
-                cout << "Incorrect entry, the figure cannot take to an empty "
-                        "chessboard square"
-                     << endl;
                 return false;
             }
         }
@@ -250,19 +262,11 @@ bool CheckType(int beginY, int beginX, char pole[][9], char coordinates[])
         if (pole[beginY - 1][beginX] == 'p'
             || pole[beginY - 1][beginX] == 'P') {
         } else {
-            cout << "Incorrect entry, the type of piece does not match "
-                    "the type of piece standing on the starting chessboard "
-                    "square"
-                 << endl;
             return false;
         }
     } else {
         if (pole[beginY - 1][beginX] == coordinates[0]) {
         } else {
-            cout << "Incorrect entry, the type of piece does not match "
-                    "the type of piece standing on the starting chessboard "
-                    "square"
-                 << endl;
             return false;
         }
     }
