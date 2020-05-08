@@ -61,17 +61,20 @@ TEST_CASE("Incorrect move. Empty start chessboard square", "Incorrect")
     REQUIRE(CheckMove(coordinates, pole, endY, endX, beginY, beginX) == false);
 }
 
-TEST_CASE("The move isn't off the board", "correct")
+TEST_CASE("Correct move. Not beyond chessboard", "correct")
 {
-    //(CheckBoard(beginX, beginY, endX, endY);
     // e2-e4
-    REQUIRE(CheckBoard(5, 2, 5, 4) == true);
-    // e2-e9
-    REQUIRE(CheckBoard(5, 2, 5, 9) == false);
-    // e0-e5
-    REQUIRE(CheckBoard(5, 0, 5, 5) == false);
-    // a2-a5
-    REQUIRE(CheckBoard(1, 2, 1, 5) == true);
+    int endY = 4, endX = 5;
+    int beginY = 2, beginX = 5;
+    REQUIRE(CheckBoard(beginX, beginY, endX, endY) == true);
+}
+
+TEST_CASE("Inorrect move. Beyond chessboard", "correct")
+{
+    // e0-e4
+    int endY = 4, endX = 5;
+    int beginY = 0, beginX = 5;
+    REQUIRE(CheckBoard(beginX, beginY, endX, endY) == false);
 }
 
 TEST_CASE("correct check type 'Q'", "correct")
