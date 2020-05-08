@@ -8,13 +8,25 @@ using namespace std;
 int beginY = 0, endY = 0;
 int beginX = 0, endX = 0;
 
-void CheckTypePiece(char coordinates[], char pole[][9])
+bool CheckTypePiece(char coordinates[], char pole[][9])
 {
+    if (strlen(coordinates) > 6 || strlen(coordinates) < 5) {
+        return false;
+    }
+
     if (strlen(coordinates) == 5) {
+        if (coordinates[2] == '-' && coordinates[2] == 'x') {
+            return false;
+        }
         if (checkMove(coordinates, pole)) {
             movePawn(coordinates, pole);
         }
     } else if (strlen(coordinates) == 6) {
+        if (coordinates[3] == '-' && coordinates[3] == 'x') {
+            return false;
+        } else {
+            return false;
+        }
         switch (coordinates[0]) {
         case 'Q':
             if (checkMove(coordinates, pole)) {
@@ -75,6 +87,7 @@ void CheckTypePiece(char coordinates[], char pole[][9])
              << endl;
     }
     cout << endl;
+    return true;
 }
 void movePawn(char coordinates[], char pole[][9])
 {
@@ -182,15 +195,13 @@ bool checkMove(char coordinates[], char pole[][9])
         return false;
     }
 
-    if (CheckType(beginY, beginX, pole, coordinates) == false) {
-        cout << "Incorrect entry, the type of piece does not match "
-                "the type of piece standing on the starting chessboard "
-                "square"
-             << endl;
-        return false;
-    }
-
-    if (CheckMove(coordinates, pole, endY, endX) == false) {
+    if (CheckMove(coordinates, pole, endY, endX, beginY, beginX) == false) {
+        if (pole[beginY - 1][beginX] == ' ') {
+            cout << "Incorrect entry, you can't do move, cause start "
+                    "chessboard square is empty."
+                 << endl;
+            return false;
+        }
         if (strlen(coordinates) == 5) {
             if (coordinates[2] == 'x') {
                 cout << "Incorrect entry, the figure cannot take to an empty "
@@ -212,8 +223,18 @@ bool checkMove(char coordinates[], char pole[][9])
                      << endl;
             }
         }
+
         return false;
     }
+
+    if (CheckType(beginY, beginX, pole, coordinates) == false) {
+        cout << "Incorrect entry, the type of piece does not match "
+                "the type of piece standing on the starting chessboard "
+                "square"
+             << endl;
+        return false;
+    }
+
     return true;
 }
 
@@ -226,32 +247,42 @@ bool CheckBoard(int a, int b, int c, int d)
     return true;
 }
 
-bool CheckMove(char coordinates[], char pole[][9], int endY, int endX)
+bool CheckMove(
+        char coordinates[],
+        char pole[][9],
+        int endY,
+        int endX,
+        int beginY,
+        int beginX)
 {
-    if (strlen(coordinates) == 5) {
-        if (coordinates[2] == '-') {
-            if (pole[endY - 1][endX] == ' ') {
-            } else {
-                return false;
+    if (pole[beginY - 1][beginX] != ' ') {
+        if (strlen(coordinates) == 5) {
+            if (coordinates[2] == '-') {
+                if (pole[endY - 1][endX] == ' ') {
+                } else {
+                    return false;
+                }
+            } else if (coordinates[2] == 'x') {
+                if (pole[endY - 1][endX] != ' ') {
+                } else {
+                    return false;
+                }
             }
-        } else if (coordinates[2] == 'x') {
-            if (pole[endY - 1][endX] != ' ') {
-            } else {
-                return false;
+        } else {
+            if (coordinates[3] == '-') {
+                if (pole[endY - 1][endX] == ' ') {
+                } else {
+                    return false;
+                }
+            } else if (coordinates[3] == 'x') {
+                if (pole[endY - 1][endX] != ' ') {
+                } else {
+                    return false;
+                }
             }
         }
     } else {
-        if (coordinates[3] == '-') {
-            if (pole[endY - 1][endX] == ' ') {
-            } else {
-                return false;
-            }
-        } else if (coordinates[3] == 'x') {
-            if (pole[endY - 1][endX] != ' ') {
-            } else {
-                return false;
-            }
-        }
+        return false;
     }
     return true;
 }
